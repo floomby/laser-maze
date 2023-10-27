@@ -1,16 +1,10 @@
-export enum AppState {
-  LOADING = "loading",
-  READY = "ready",
-  STAND_BY = "standBy",
-  RUNNING = "running",
-}
+// This may be a bit over engineered, we don't need the kind of extensibility that I am allowing here
 
 export type Player = {
   name: string;
 };
 
 export type AppStateMessage = {
-  state: AppState;
   queue: { [id: number]: Player };
   current: (Player & { id: number }) | null;
 };

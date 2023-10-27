@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 import { ServerEventsContext } from "../providers/ServerEvents";
-import { AppState } from "common";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { addPlayer } from "../lib/api";
@@ -8,7 +7,7 @@ import { addPlayer } from "../lib/api";
 const Entry: React.FC = () => {
   const [name, setName] = useState<string>("");
 
-  const { state } = useContext(ServerEventsContext);
+  const { loading } = useContext(ServerEventsContext);
 
   return (
     <div className="flex flex-row py-2 h-fit w-full max-w-[800px]">
@@ -18,7 +17,7 @@ const Entry: React.FC = () => {
         value={name}
         onChange={(e) => setName(e.target.value)}
         onKeyDown={(e) => {
-          if (e.key === "Enter" && state !== AppState.LOADING && name !== "") {
+          if (e.key === "Enter" && !loading && name !== "") {
             addPlayer(name);
             setName("");
           }
@@ -27,12 +26,12 @@ const Entry: React.FC = () => {
       <button
         className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold rounded-r-lg pl-2 pr-2 py-1 disabled:opacity-30 disabled:cursor-not-allowed"
         onClick={() => {
-          if (state !== AppState.LOADING && name !== "") {
+          if (!loading && name !== "") {
             addPlayer(name);
             setName("");
           }
         }}
-        disabled={state === AppState.LOADING}
+        disabled={loading}
       >
         <FontAwesomeIcon icon={faPlus} className="h-8 translate-y-[1px]" />
       </button>

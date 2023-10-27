@@ -36,25 +36,6 @@ export const removePlayer = (id: number) => {
     .catch(console.error);
 };
 
-// sets the current player to this player and and resets the laser maze into an accepting state
-export const play = (id: number) => {
-  fetch(
-    `http://${window.location.hostname}:${
-      import.meta.env.VITE_BACKEND_PORT
-    }/play`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id }),
-    }
-  )
-    .then((response) => response.json())
-    .then((data) => console.log(data))
-    .catch(console.error);
-};
-
 export const reset = () => {
   fetch(
     `http://${window.location.hostname}:${

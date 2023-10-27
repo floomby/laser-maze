@@ -1,10 +1,9 @@
 import { reset } from "../lib/api";
-import { AppState } from "common";
 import { useContext } from "react";
 import { ServerEventsContext } from "../providers/ServerEvents";
 
 export default function Reset() {
-  const { state } = useContext(ServerEventsContext);
+  const { current } = useContext(ServerEventsContext);
 
   return (
     <button
@@ -12,7 +11,7 @@ export default function Reset() {
       onClick={() => {
         reset();
       }}
-      disabled={state !== AppState.RUNNING}
+      disabled={!!current}
     >
       Reset Maze
     </button>

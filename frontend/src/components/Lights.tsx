@@ -1,13 +1,8 @@
 import { startLights, stopLights } from "../lib/api";
-import { AppState } from "common";
-import { useContext } from "react";
-import { ServerEventsContext } from "../providers/ServerEvents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay, faStop } from "@fortawesome/free-solid-svg-icons";
 
 export default function Lights() {
-  const { state } = useContext(ServerEventsContext);
-
   return (
     <>
       <button

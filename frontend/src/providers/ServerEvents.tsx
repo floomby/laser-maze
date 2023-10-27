@@ -1,14 +1,14 @@
-import { type ServerMessage, AppState, type Player } from "common";
+import { type ServerMessage, type Player } from "common";
 import React, { createContext, ReactNode, useEffect, useState } from "react";
 
 interface ServerEventsProviderProps {
-  state: AppState;
+  loading: boolean;
   queue: { [id: number]: Player };
   current: (Player & { id: number }) | null;
 }
 
 export const ServerEventsContext = createContext<ServerEventsProviderProps>({
-  state: AppState.LOADING,
+  loading: true,
   queue: {},
   current: null,
 });
@@ -20,7 +20,7 @@ interface ServerEventsProps {
 export const ServerEventsProvider: React.FC<ServerEventsProps> = ({
   children,
 }) => {
-  const [state, setState] = useState<AppState>(AppState.LOADING);
+  const [loading, setLoading] = useState<boolean>(true);
   const [queue, setQueue] = useState<{ [id: number]: Player }>({});
   const [current, setCurrent] = useState<(Player & { id: number }) | null>(
     null
@@ -35,11 +35,11 @@ export const ServerEventsProvider: React.FC<ServerEventsProps> = ({
     );
 
     eventSource.onmessage = (event: MessageEvent<string>) => {
+      loading && setLoading(false);
       const message = JSON.parse(event.data) as ServerMessage;
       switch (message.type) {
         case "appState":
           console.log("Received state update:", message);
-          setState(message.state);
           setQueue(message.queue);
           setCurrent(message.current);
           break;
@@ -58,7 +58,7 @@ export const ServerEventsProvider: React.FC<ServerEventsProps> = ({
   return (
     <ServerEventsContext.Provider
       value={{
-        state,
+        loading,
         queue,
         current,
       }}
