@@ -1,0 +1,20 @@
+{
+  "name": "vite-express-template",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend",
+    "common"
+  ],
+  "devDependencies": {
+    "concurrently": "^8.2.1"
+  },
+  "scripts": {
+    "build": "yarn workspace common build && yarn workspace frontend build && yarn workspace backend build",
+    "dev-no-mock": "concurrently \"yarn workspace frontend dev\" \"yarn workspace backend dev\" \"yarn workspace common watch\"",
+    "dev": "concurrently \"yarn workspace frontend dev\" \"yarn workspace backend dev\" \"yarn workspace common watch\" \"bash scripts/mock_companion.sh\""
+  }
+}

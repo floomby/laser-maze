@@ -1,0 +1,6 @@
+node_modules
+dist
+.env
+TODO.md
+.vscode
+yarn-error.log
