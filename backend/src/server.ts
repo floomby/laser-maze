@@ -4,7 +4,7 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 
-import { type ServerMessage, AppState, type Player } from "common";
+import { type ServerMessage, type Player } from "common";
 
 import Laser, { LaserEvent } from "./laser.js";
 import env from "./env.js";
@@ -186,6 +186,18 @@ app.post("/reset", (req: Request, res: Response) => {
     sendAppState(client);
   }
 
+  laser.reset();
+
+  res.status(200).json({ success: true });
+});
+
+app.get("/fog/on", (req: Request, res: Response) => {
+  laser.fogOn();
+  res.status(200).json({ success: true });
+});
+
+app.get("/fog/off", (req: Request, res: Response) => {
+  laser.fogOff();
   res.status(200).json({ success: true });
 });
 

@@ -26,3 +26,9 @@ yarn dev-no-mock
 ```
 
 It should be accessible on port 5173 on all interfaces over http.
+
+### Fog
+
+Turning on and off the fog from companion can be done by sending get requests to `/fog/on` and `/fog/off`
+
+This will send the bytes `0x06` and `0x07` (respectively) to the device.

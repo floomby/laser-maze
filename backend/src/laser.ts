@@ -9,7 +9,7 @@ export enum LaserEvent {
   HALFWAY = "halfway",
   FINISHED = "finished",
   EXPIRED = "expired",
-};
+}
 
 export default class Laser extends EventEmitter implements ProtocolHandler {
   private port: SerialPort;
@@ -62,6 +62,20 @@ export default class Laser extends EventEmitter implements ProtocolHandler {
   // reset the laser maze to playable state by sending a 0x00 byte
   reset() {
     console.log("Resetting laser maze");
-    this.port.write("something interesting is happening here\n");
+    this.port.write("00", "hex");
+    // drain the port to ensure the write completes
+    this.port.drain();
+  }
+
+  fogOn() {
+    console.log("Fog on");
+    this.port.write("06", "hex");
+    this.port.drain();
+  }
+
+  fogOff() {
+    console.log("Fog off");
+    this.port.write("07", "hex");
+    this.port.drain();
   }
 }

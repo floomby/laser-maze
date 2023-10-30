@@ -11,7 +11,7 @@ export default function Reset() {
       onClick={() => {
         reset();
       }}
-      disabled={!!current}
+      disabled={!current}
     >
       Reset Maze
     </button>
